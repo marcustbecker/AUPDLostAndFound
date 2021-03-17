@@ -58,6 +58,11 @@ app.delete( '/item', function(req, res){
     res.send('deleting an item')
 });
 
+app.put( '/claim/id', function(req, res){
+    console.log('inside PUT claim')
+    res.send('we are editing to claim an item')
+});
+
 let port = 3000;
 console.log(`Listening on 127.0.0.1:${port}`);
 app.listen( port );
