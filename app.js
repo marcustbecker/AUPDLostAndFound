@@ -1,70 +1,63 @@
-/*
-let express = require('express')
-let app = express();
+const express = require('express');
+const session = require('express-session');
+const path = require('path');
+const pageRouter = require('./routes/mainRouter');
+var methodOverride = require('method-override')
+const app = express();
+const cors = require('cors')
+app.use(cors())
 
-app.get( '/', function(req, res){
-    res.send("This is the base port /");
-});
-app.get( '/contacts', function(req, res){
-    console.log('inside GET contacts')
-    let response = {
-        'fname' : "Marcus",
-        'lname' : "Becker"
+// for body parser. to collect data that sent from the client.
+app.use(express.urlencoded( { extended : false}));
+
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+      // look in urlencoded POST bodies and delete it
+      var method = req.body._method
+      delete req.body._method
+      return method
     }
-    console.log(response);
-    res.send( JSON.stringify( response) );
-    //res.send("These are all the contacts");
-});
-app.get( '/contacts/id', function(req, res){
-    console.log('inside GET one contact')
-    res.send("This is one contact");
-});
-app.post( '/contacts', function(req, res){
-    console.log('inside POST contacts')
-    res.send('we are posting to contacts')
-});
-app.put( '/contacts', function(req, res){
-    console.log('inside PUT contacts')
-    res.send('we are editing contacts')
-});
-app.delete( '/contacts', function(req, res){
-    console.log('inside DELETE contacts')
-    res.send('deleting a contact')
-});
+  }))
 
-app.get( '/item', function(req, res){
-    console.log('inside GET item')
-    let response = {
-        'name' : "keychain",
-        'weight' : ".5lbs"
+// Serve static files. CSS, Images, JS files ... etc
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Template engine. PUG
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+// session
+app.use(session({
+    secret:'bookstoresecret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60 * 1000 * 30
     }
-    console.log(response);
-    res.send( JSON.stringify( response) );
-    //res.send("These are all the contacts");
-});
-app.get( '/item/id', function(req, res){
-    console.log('inside GET one item')
-    res.send("This is one item");
-});
-app.post( '/item', function(req, res){
-    console.log('inside POST item')
-    res.send('we are posting to item')
-});
-app.put( '/item', function(req, res){
-    console.log('inside PUT item')
-    res.send('we are editing item')
-});
-app.delete( '/item', function(req, res){
-    console.log('inside DELETE item')
-    res.send('deleting an item')
+}));
+
+
+// Routers
+app.use('/', pageRouter);
+
+
+// Errors => page not found 404
+app.use((req, res, next) =>  {
+    var err = new Error('Page not found');
+    err.status = 404;
+    next(err);
+})
+
+// Handling errors (send them to the client)
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send(err.message);
 });
 
-app.put( '/claim/id', function(req, res){
-    console.log('inside PUT claim')
-    res.send('we are editing to claim an item')
+// Setting up the server
+app.listen(3000, () => {
+    console.log('Server is running on port 3000...');
 });
 
-let port = 3000;
-console.log(`Listening on 127.0.0.1:${port}`);
-app.listen( port );
-*/
+module.exports = app;
