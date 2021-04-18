@@ -4,6 +4,8 @@ const mainCtrl = require('../controller/mainController');
 
 // Get the index page
 app.route('/')
+    .get(mainCtrl.getHomePage)
+app.route('/tasks')
     .get(mainCtrl.getTasks)
 
 app.route('/create')

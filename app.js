@@ -1,7 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const pageRouter = require('./routes/mainRouter');
+const pageRouter = require('./routes/mainRoutes');
+const CategoryRouter = require('./routes/categoryRoutes');
 var methodOverride = require('method-override')
 const app = express();
 const cors = require('cors')
@@ -39,7 +40,7 @@ app.use(session({
 
 
 // Routers
-app.use('/', pageRouter);
+app.use('/', pageRouter, CategoryRouter);
 
 
 // Errors => page not found 404
