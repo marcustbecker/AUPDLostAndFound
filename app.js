@@ -1,8 +1,12 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+// Page routes
 const pageRouter = require('./routes/mainRoutes');
 const CategoryRouter = require('./routes/categoryRoutes');
+const LocationRouter = require('./routes/locationRoutes')
+const ItemRouter = require('./routes/itemRoutes')
+
 var methodOverride = require('method-override')
 const app = express();
 const cors = require('cors')
@@ -40,7 +44,7 @@ app.use(session({
 
 
 // Routers
-app.use('/', pageRouter, CategoryRouter);
+app.use('/', pageRouter, CategoryRouter, LocationRouter, ItemRouter);
 
 
 // Errors => page not found 404

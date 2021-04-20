@@ -1,13 +1,25 @@
-"use strict";
-var mysql = require("mysql");
-//local mysql db connection
-var connection = mysql.createConnection({
+const util = require('util');
+const mysql = require('mysql');
+/**
+ * Connection to the database.
+ *  */
+const pool = mysql.createPool({
   host: "45.55.136.114",
   user: "MNDs2021",
   password: "baseba11is0K!",
   database: "MNDs2021",
 });
-connection.connect(function (err) {
-  if (err) throw err;
+
+pool.getConnection((err, connection) => {
+  if(err) 
+      console.error("Something went wrong connecting to the database ...");
+  
+  if(connection)
+      console.log("Connected to database");
+      connection.release();
+  return;
 });
-module.exports = connection;
+
+pool.query = util.promisify(pool.query);
+
+module.exports = pool;

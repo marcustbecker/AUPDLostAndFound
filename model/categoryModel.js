@@ -19,8 +19,8 @@ Category.createCategory = function (newCat, result) {
     });
 };
 
-Category.getTaskById = function (taskId, result) {
-    sql.query("Select id, task, status, created_at from tasks where id = ? ", taskId, function (err, res) {
+Category.getCategoryById = function (categoryId, result) {
+    sql.query("SELECT category_id, category_name from category WHERE category_id = ? ", categoryId, function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -28,6 +28,40 @@ Category.getTaskById = function (taskId, result) {
             result(null, res);
         }
     });
+};
+
+//maybe this will work
+function myFunction(id) {
+    let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
+        //console.log(sql);
+
+        sql.query(sqlStr, id, function(err, result) {
+            if(err) throw err
+            //console.log(result);
+
+            if(result.length) {
+                return result[0];
+            }else {
+                return(null);
+            }
+        });
+}
+
+Category.getOneCategory = function(id, callback){
+    let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
+        //console.log(sql);
+
+        sql.query(sqlStr, id, function(err, result) {
+            if(err) throw err
+            //console.log(result);
+
+            if(result.length) {
+                callback(result[0]);
+            }else {
+                callback(null);
+            }
+        });
+
 };
 
 Category.getAllCategories = function (result) {

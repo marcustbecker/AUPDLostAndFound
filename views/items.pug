@@ -1,0 +1,47 @@
+extends layout
+block content 
+    main(class="container")
+        div(class="bg-light p-5 rounded")
+            h1 Items Manager
+            div(class="row")
+                div(class="col-sm")
+                    p(class="lead") Example to illustrate crud functionality
+
+            h2 Create new Item (needs to be completed):
+            div(class="row")
+                div(class="col-sm")
+                    form(action='categories' method='POST')
+                        .form-group
+                            label(class="control-label col-sm-2" for="category_name") Category Name
+                            input(type='text' class="form-control" name='category_name' id='category_name' required='')
+                        input(type='submit' class='btn btn-outline-success')
+            br
+
+            table.table.table-striped
+                thead
+                    th Item Name
+                    th Description
+                    th Value
+                    th Found By
+                    th Date Found 
+                    th Claimed By
+                    th Date Claimed 
+                    th Location Found 
+                    th Category
+                
+                tbody
+                    each d in Data
+                        tr
+                            td=d.item_name
+                            td=d.item_description
+                            td=d.approx_value
+                            td=d.found_user_id
+                            td=d.date_found 
+                            td=d.claimed_user_id 
+                            td=d.date_claimed 
+                            td=d.location_found 
+                            td=d.category
+
+            
+
+

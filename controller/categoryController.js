@@ -11,21 +11,20 @@ exports.getCategories = function (req, res) {
         //console.log('controller')
         if (err) res.send(err);
         //console.log('res', categories[0]);
-        //res.send(task);
+        //res.send(categories);
         res.render('categories', {title:"Test application", Data: categories});
     });
 };
 
 exports.delete_a_category = function (req, res) {
-    console.log(req.params.catId)
+    //console.log(req.params.catId)
     const id = req.params.catId
-    //res.render('test', {title:"Test application", Tasks: task});
-    Category.remove(req.params.catId, function (err, category) {
+    Category.remove(id, function (err, category) {
         if (err) res.send(err);
         //res.json({message: 'Task successfully deleted'});
-        res.render('test', {title:"Test application", Tasks: id});
+        const deleting = "Category"
+        res.render('test', {title:"Test application", DelName: deleting, ID: id});
     });
-
 };
 
 exports.create_a_category = function (req, res) {
@@ -38,15 +37,16 @@ exports.create_a_category = function (req, res) {
     } else {
         Category.createCategory(new_category, function (err, category) {
             if (err) res.send(err);
-            //res.json(category);
-            res.redirect('/categories')
+            res.json(category);
+            //res.redirect('/categories')
         });
     }
 };
-exports.read_a_task = function (req, res) {
-    Task.getTaskById(req.params.taskId, function (err, task) {
+exports.find_a_category = function (req, res) {
+    Category.getCategoryById(req.params.catId, function (err, category) {
         if (err) res.send(err);
-        res.json(task);
+        res.json(category);
+        //res.redirect('/categories')
     });
 };
 exports.update_a_task = function (req, res) {
