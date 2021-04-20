@@ -8,30 +8,27 @@ exports.list_all_items = function (req, res) {
         //console.log('item controller')
         if (err) res.send(err);
 
-        for(let i=0; i<items.length; i++){
-            
-            categoryCtrl.getOneCategory(items[i].category, function(result){
-                if(result){
-                    //console.log("byid res: ", result)
-                    //console.log("cat name: ", result.category_name)
-                    items[i].category = result.category_name
-                    console.log("Items after Change: ", items);
-                }
-            })
-        }
-
-        console.log("The New Items:", items);
-        res.render('items', {title:"Lost and Found Items", Data: items});
-        
         //console.log('res', items);
-        //res.send(task);
+        //res.json(items);
+        res.render('items', {title:"Lost and Found Items", Data: items});
         
     });
 };
 
-function myFunction() {
-    console.log("Here")
-  }
+exports.list_all_claimed_items = function (req, res) {
+    Item.getClaimedItems(function (err, items) {
+        if (err) res.send(err);
+        //res.json(items);
+        res.render('reportsClaimed', {title:"Claimed Items Report", Data: items});
+    });
+};
+
+exports.list_all_unclaimed_items = function (req, res) {
+    Item.getUnclaimedItems(function (err, task) {
+        if (err) res.send(err);
+        res.json(task);
+    });
+};
 
 /*
 exports.create_a_task = function (req, res) {

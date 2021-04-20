@@ -26,7 +26,7 @@ block content
                     th Date Found 
                     th Claimed By
                     th Date Claimed 
-                    th Location Found 
+                    th Location 
                     th Category
                 
                 tbody
@@ -38,9 +38,12 @@ block content
                             td=d.found_user_id
                             td=d.date_found 
                             td=d.claimed_user_id 
-                            td=d.date_claimed 
-                            td=d.location_found 
-                            td=d.category
+                            td=d.date_claimed
+                            if(d.floor)
+                                td #{d.location_name} Floor: #{d.floor}
+                            else
+                                td #{d.location_name} Floor: N/A
+                            td=d.category_name
 
             
 

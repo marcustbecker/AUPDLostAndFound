@@ -15,12 +15,42 @@ var Item = function (item) {
 };
 
 Item.getAllItems = function (result) {
-    sql.query("SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found from item", function (err, res) {
+    const sqStr = "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found, DATE_FORMAT(date_claimed, '%m/%d/%Y') AS date_claimed FROM item"
+    + " INNER JOIN category ON item.category = category.category_id"
+    + " JOIN `location` ON `item`.`location_found` = `location`.`location_id`"
+
+    //const sqStr2 = "SELECT * FROM `item` JOIN `location` ON `item`.`location_found` = `location`.`location_id`"
+    sql.query(sqStr , function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(null, err);
         } else {
             //console.log('item : ', res);
+            result(null, res);
+        }
+    });
+};
+
+Item.getClaimedItems = function (result) {
+    const sqStr = "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found, DATE_FORMAT(date_claimed, '%m/%d/%Y') AS date_claimed FROM item"
+        + " INNER JOIN user ON item.found_user_id = user.user_id WHERE claimed_user_id IS NOT NULL"
+
+    sql.query( sqStr, function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        } else {
+            result(null, res);
+        }
+    });
+};
+
+Item.getUnclaimedItems = function (result) {
+    sql.query("SELECT * FROM item WHERE claimed_user_id IS NULL", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        } else {
             result(null, res);
         }
     });
@@ -44,17 +74,6 @@ Category.remove = function (id, result) {
         if (err) {
             console.log("error: ", err);
             result(null, err);
-        } else {
-            result(null, res);
-        }
-    });
-};
-
-Category.getTaskById = function (taskId, result) {
-    sql.query("Select id, task, status, created_at from tasks where id = ? ", taskId, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
         } else {
             result(null, res);
         }
