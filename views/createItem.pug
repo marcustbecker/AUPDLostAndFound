@@ -17,7 +17,7 @@ block content
                             label(class="control-label col-sm-4" for="approx_value") Approximate Value of Item:
                             input(type='text' class="form-control" name='approx_value' id='approx_value')
                         .form-group
-                            label(class="control-label col-sm-4" for="date_found") Date Found
+                            label(class="control-label col-sm-4" for="date_found") Date Found (yyyy-mm-dd)
                             input(type='text' class="form-control" name='date_found' id='date_found')
                         .form-group 
                             label(class="control-label d-inline-flex p-2" for="category") Category:
@@ -35,6 +35,6 @@ block content
                             label(class="control-label col-sm-4" for="location_description") Location Description
                             input(type='text' class="form-control" name='location_description' id='location_description')
                         .form-group
-                            input(type='hidden' id='found_user_id' name='found_user_id' value='5')
+                            input(type='hidden' id='found_user_id' name='found_user_id' value=`${UserID}`)
                         input(type='submit' class='btn btn-outline-success')
 

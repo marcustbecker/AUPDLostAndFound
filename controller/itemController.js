@@ -56,8 +56,9 @@ exports.create_an_item_form = function (req, res) {
              {title: "Create Item Page",
               Categories: categories, 
               Locations: locations, 
-              LoggedIn: req.session.user.loggedIn,
-              Admin: req.session.user.admin})
+              LoggedIn: user.loggedIn,
+              Admin: user.admin,
+              UserID: user.user_id})
         })
     })
 };
@@ -67,6 +68,10 @@ exports.create_an_item = function (req, res) {
     //console.log("POST CREATE");
     var new_item = new Item(req.body);
     //console.log( new_item );
+    //if estimated value of item is blank, insert null
+    if(new_item.approx_value === ""){
+        new_item.approx_value = null;
+      }
     //handles null error
     if (!new_item.item_name || !new_item.item_description) {
         res.status(400).send({error: true, message: 'Please provide name/description'});

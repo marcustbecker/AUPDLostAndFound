@@ -32,8 +32,8 @@ app.post('/register', (req, res, next) => {
             user.find(lastId, function(result) {
                 req.session.user = result;
                 req.session.opp = 0;
-                //res.redirect('/addCustomer');
-                res.json(result)
+                //res.json(result)
+                res.redirect('/loginform');
             });
 
         }else {

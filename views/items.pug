@@ -8,12 +8,10 @@ block content
 
         if(Admin === 1)
             div(class="row pl-5")
-                div(class="d-inline-flex pl-2")
+                div(class="d-inline-flex")
                     h3 Add new Item: 
                 div(class="d-inline-flex pl-3")
                     a(role="button" class="btn btn-outline-success" href="/createItem") Create New Item
-
-            br
 
         table(class='table table-striped' id="table" data-filter-control="true" data-show-search-clear-button="true")
             thead
@@ -21,7 +19,7 @@ block content
                 th(data-field="description") Description
                 th(data-field="value") Value
                 if(Admin === 1)
-                    th(data-field="found by") Found By
+                    th(data-field="found by") Officer ID
                 th(data-field="date found") Date Found 
                 if(Admin === 1)
                     th(data-field="claimed by") Claimed By
