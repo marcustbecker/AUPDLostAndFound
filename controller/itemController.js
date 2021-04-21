@@ -41,16 +41,17 @@ exports.create_an_item_form = function (req, res) {
 };
 
 exports.create_an_item = function (req, res) {
-    console.log("POST CREATE");
+    //console.log("POST CREATE");
     var new_item = new Item(req.body);
-    console.log( new_item );
+    //console.log( new_item );
     //handles null error
-    if (!new_item.item_name || !new_item.item_desciption) {
+    if (!new_item.item_name || !new_item.item_description) {
         res.status(400).send({error: true, message: 'Please provide name/description'});
     } else {
-        Item.createItem(new_item, function (err, task) {
+        Item.createItem(new_item, function (err, item) {
             if (err) res.send(err);
-            res.json(item);
+            //res.json(item);
+            res.redirect('/items')
         });
     }
 };

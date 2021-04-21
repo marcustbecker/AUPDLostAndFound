@@ -8,6 +8,7 @@ app.route('/items')
 
 app.route('/createItem')
     .get(itemCtrl.create_an_item_form)
+    .post(itemCtrl.create_an_item)
 
 app.route('/claimeditems')
     .get(itemCtrl.list_all_claimed_items)
