@@ -3,6 +3,11 @@ const app = express.Router();
 const User = require('../model/userModel');
 const user = new User();
 
+app.get('/', (req, res, next) =>{
+    let user = req.session.user;
+    res.render('home', {title:"AUPD Lost and Found"});
+});
+
 app.get('/regform', (req, res, next) =>{
     res.render('register', {title: "Register Account"});
 });
@@ -50,7 +55,7 @@ app.post('/login', (req, res, next) => {
         if(result) {
             // Store the user data in a session.
             req.session.user = result;
-            req.session.loggedIn = true;
+            req.session.user.loggedIn = true;
 
             //output message on homepage depending on if we just logged in or registered
             // opp = 1 for login; opp = 0 for register
@@ -72,7 +77,7 @@ app.get('/logout', (req, res, next) => {
     if(req.session.user) {
         // destroy the session and redirect the user to the index page.
         req.session.destroy(function() {
-            res.redirect('/items');
+            res.redirect('/');
         });
     }
 });

@@ -2,7 +2,7 @@
 const Task = require('../model/taskModel.js');
 
 exports.getHomePage = function (req, res) {
-    let loggedIn = req.session.loggedIn;
+    let user = req.session.user;
     res.render('home', {title:"My application"});
 };
 

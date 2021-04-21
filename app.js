@@ -50,7 +50,7 @@ app.use('/', pageRouter, CategoryRouter, LocationRouter, ItemRouter, UserRouter)
 
 // Errors => page not found 404
 app.use((req, res, next) =>  {
-    var err = new Error('Page not found');
+    var err = new Error('404: Page not found');
     err.status = 404;
     next(err);
 })

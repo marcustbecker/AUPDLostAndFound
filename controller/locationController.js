@@ -3,18 +3,22 @@ var Location = require("../model/locationModel");
 
 
 exports.list_all_locations = function (req, res) {
-  let loggedIn = req.session.loggedIn;
+  let user = req.session.user;
   Location.getAllLocations(function (err, locations) {
     //console.log("location controller");
     if (err) res.send(err);
     //console.log("res", locations);
     //res.send(location);
-    res.render('locations', {title:"AU Locations", Data: locations, LoggedIn: loggedIn});
+    res.render('locations',
+     {title:"AU Locations",
+      Data: locations, 
+      LoggedIn: req.session.user.loggedIn,
+      Admin: req.session.user.admin});
   });
 };
 
 exports.create_location = function (req, res) {
-  let loggedIn = req.session.loggedIn;
+  let user = req.session.user;
   var new_location = new Location(req.body);
   //if non-required fields are blank, set them to null
   if(new_location.room === ""){
@@ -51,12 +55,17 @@ exports.update_a_task = function (req, res) {
 };
 */
 exports.delete_a_location = function (req, res) {
-  let loggedIn = req.session.loggedIn;
+  let user = req.session.user;
   const id = req.params.locatId
   Location.remove(id, function (err, location) {
     if (err) res.send(err);
     //res.json({ message: "Location successfully deleted" });
     const deleting = "Location"
-    res.render('test', {title:"Test application", DelName: deleting, ID: id, LoggedIn: loggedIn});
+    res.render('test',
+     {title:"Test application",
+      DelName: deleting, 
+      ID: id, 
+      LoggedIn: req.session.user.loggedIn,
+      Admin: req.session.user.admin});
   });
 };
