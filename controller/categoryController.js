@@ -37,8 +37,8 @@ exports.create_a_category = function (req, res) {
     } else {
         Category.createCategory(new_category, function (err, category) {
             if (err) res.send(err);
-            res.json(category);
-            //res.redirect('/categories')
+            //res.json(category);
+            res.redirect('/categories')
         });
     }
 };

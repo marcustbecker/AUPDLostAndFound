@@ -4,9 +4,9 @@ var Location = require("../model/locationModel");
 
 exports.list_all_locations = function (req, res) {
   Location.getAllLocations(function (err, locations) {
-    console.log("location controller");
+    //console.log("location controller");
     if (err) res.send(err);
-    console.log("res", locations);
+    //console.log("res", locations);
     //res.send(location);
     res.render('locations', {title:"AU Locations", Data: locations});
   });
@@ -18,13 +18,7 @@ exports.create_location = function (req, res) {
   if(new_location.room === ""){
     new_location.room = null;
   }
-  if(new_location.floor ===""){
-    new_location.floor = null;
-  }
-  if(new_location.description ===""){
-    new_location.description = null;
-  }
-  console.log("New location data: ", new_location)
+  //console.log("New location data: ", new_location)
   //handles null error
   if (!new_location.location_name) {
     res.status(400).send({
@@ -34,7 +28,8 @@ exports.create_location = function (req, res) {
   } else {
     Location.createLocation(new_location, function (err, location) {
       if (err) res.send(err);
-      res.json(location);
+      //res.json(location);
+      res.redirect('/locations')
     });
   }
 };

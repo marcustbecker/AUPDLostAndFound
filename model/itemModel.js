@@ -46,7 +46,7 @@ Item.getClaimedItems = function (result) {
 };
 
 Item.getUnclaimedItems = function (result) {
-    sql.query("SELECT * FROM item WHERE claimed_user_id IS NULL", function (err, res) {
+    sql.query("SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found FROM item WHERE claimed_user_id IS NULL", function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -55,9 +55,9 @@ Item.getUnclaimedItems = function (result) {
         }
     });
 };
-/*
-Category.createCategory = function (newCat, result) {
-    sql.query("INSERT INTO category set ?", newCat, function (err, res) {
+
+Item.createItem = function (newCat, result) {
+    sql.query("INSERT INTO item set ?", newCat, function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -69,6 +69,7 @@ Category.createCategory = function (newCat, result) {
     });
 };
 
+/*
 Category.remove = function (id, result) {
     sql.query("DELETE FROM category WHERE category_id = ?", [id], function (err, res) {
         if (err) {

@@ -1,6 +1,7 @@
 'use strict';
-var Item = require('../model/itemModel');
-const categoryCtrl = require('../model/categoryModel')
+const Item = require('../model/itemModel');
+const Category = require('../model/categoryModel');
+const Location = require('../model/locationModel')
 
 exports.list_all_items = function (req, res) {
     //console.log("LIST ALL ITEMS");
@@ -24,27 +25,36 @@ exports.list_all_claimed_items = function (req, res) {
 };
 
 exports.list_all_unclaimed_items = function (req, res) {
-    Item.getUnclaimedItems(function (err, task) {
+    Item.getUnclaimedItems(function (err, items) {
         if (err) res.send(err);
-        res.json(task);
+        //res.json(items);
+        res.render('reportsUnclaimed', {title:"Unclaimed Items Report", Data: items});
     });
 };
 
-/*
-exports.create_a_task = function (req, res) {
+exports.create_an_item_form = function (req, res) {
+    Category.getAllCategories(function (err, categories){
+        Location.getAllLocations(function (err, locations){
+            res.render('createItem', {title: "Create Item Page", Categories: categories, Locations: locations})
+        })
+    })
+};
+
+exports.create_an_item = function (req, res) {
     console.log("POST CREATE");
-    var new_task = new Task(req.body);
-    console.log( new_task );
+    var new_item = new Item(req.body);
+    console.log( new_item );
     //handles null error
-    if (!new_task.task || !new_task.status) {
-        res.status(400).send({error: true, message: 'Please provide task/status'});
+    if (!new_item.item_name || !new_item.item_desciption) {
+        res.status(400).send({error: true, message: 'Please provide name/description'});
     } else {
-        Task.createTask(new_task, function (err, task) {
+        Item.createItem(new_item, function (err, task) {
             if (err) res.send(err);
-            res.json(task);
+            res.json(item);
         });
     }
 };
+/*
 exports.delete_a_task = function (req, res) {
     Task.remove(req.params.taskId, function (err, task) {
         if (err) res.send(err);

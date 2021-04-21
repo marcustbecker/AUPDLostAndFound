@@ -5,16 +5,14 @@ block content
             h1 Items Manager
             div(class="row")
                 div(class="col-sm")
-                    p(class="lead") Example to illustrate crud functionality
+                    p(class="lead") Lost and Found items
 
-            h2 Create new Item (needs to be completed):
             div(class="row")
-                div(class="col-sm")
-                    form(action='categories' method='POST')
-                        .form-group
-                            label(class="control-label col-sm-2" for="category_name") Category Name
-                            input(type='text' class="form-control" name='category_name' id='category_name' required='')
-                        input(type='submit' class='btn btn-outline-success')
+                div(class="d-inline-flex p-2")
+                    h3 Create new Item: 
+                div(class="d-inline-flex p-2")
+                    a(role="button" class="btn btn-outline-success" href="/createItem") Create New Item
+
             br
 
             table.table.table-striped
@@ -39,10 +37,7 @@ block content
                             td=d.date_found 
                             td=d.claimed_user_id 
                             td=d.date_claimed
-                            if(d.floor)
-                                td #{d.location_name} Floor: #{d.floor}
-                            else
-                                td #{d.location_name} Floor: N/A
+                            td=d.location_name
                             td=d.category_name
 
             

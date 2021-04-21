@@ -1,0 +1,36 @@
+extends layout
+block content 
+    main(class="container")
+        div(class="bg-light p-5 rounded")
+            h1 Create New Item:
+
+            div(class="row")
+                div(class="col-sm")
+                    form(action='items' method='POST')
+                        .form-group
+                            label(class="control-label col-sm-4" for="item_name") Item Name:
+                            input(type='text' class="form-control" name='item_name' id='item_name' required='')
+                        .form-group
+                            label(class="control-label col-sm-4" for="item_description") Item Description:
+                            input(type='text' class="form-control" name='item_description' id='item_description')
+                        .form-group
+                            label(class="control-label col-sm-4" for="approx_value") Approximate Value of Item:
+                            input(type='text' class="form-control" name='approx_value' id='approx_value')
+                        .form-group
+                            label(class="control-label col-sm-4" for="date_found") Date Found
+                            input(type='text' class="form-control" name='date_found' id='date_found')
+                        .form-group 
+                            label(class="control-label d-inline-flex p-2" for="category") Category:
+                            select(id="category" name="category")
+                                each c in Categories
+                                    option(value=`${c.category_id}`)=c.category_name
+                        .form-group 
+                            label(class="control-label d-inline-flex p-2" for="location_found") Location:
+                            select(id="location_found" name="location_found")
+                                each l in Locations
+                                    option(value=`${l.location_id}`) #{l.location_name} #{l.floor}
+                        input(type='submit' class='btn btn-outline-success')
+
+            
+
+
