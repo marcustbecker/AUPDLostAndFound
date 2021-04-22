@@ -60,12 +60,4 @@ exports.delete_a_category = function (req, res) {
   });
 };
 
-exports.find_a_category = function (req, res) {
-  let user = req.session.user;
-  Category.getCategoryById(req.params.catId, function (err, category) {
-    if (err) res.send(err);
-    res.json(category);
-    //res.redirect('/categories')
-  });
-};
 

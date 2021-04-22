@@ -60,7 +60,7 @@ block content
                         else 
                             td
                                 if (d.date_claimed == null) 
-                                    form(method='get' action=`/items/${d.item_id}`)
+                                    form(method='get' action=`items/${d.item_id}`)
                                         input(class="btn btn-primary" type="submit" value=`View Details`)
                                 else 
                                     p Item claimed

@@ -5,20 +5,21 @@ const Location = require("../model/locationModel");
 
 exports.list_all_items = function (req, res) {
   let user = req.session.user;
-  console.log("User: ", user);
   //console.log("LIST ALL ITEMS");
   Item.getAllItems(function (err, items) {
     //console.log('item controller')
     if (err) res.send(err);
 
     //console.log('res', items);
-    //res.json(items);
+    res.json(items);
+    /*
     res.render("items", {
       title: "Lost and Found Items",
       Data: items,
       LoggedIn: req.session.user.loggedIn,
       Admin: req.session.user.admin,
     });
+    */
   });
 };
 
@@ -38,7 +39,6 @@ exports.list_all_claimed_items = function (req, res) {
 
 exports.list_all_unclaimed_items = function (req, res) {
   let user = req.session.user;
-  console.log("User: ", user);
   Item.getUnclaimedItems(function (err, items) {
     if (err) res.send(err);
     //res.json(items);
@@ -92,9 +92,25 @@ exports.create_an_item_form = function (req, res) {
 
 exports.create_an_item = function (req, res) {
   let user = req.session.user;
-  //console.log("POST CREATE");
-  var new_item = new Item(req.body);
-  //console.log( new_item );
+
+  console.log("INSIDE CREATE AN ITEM");
+  console.log(req.body);
+  var new_item = {
+    item_name: req.body.item_name,
+    item_description: req.body.item_description,
+    approx_value: req.body.approx_value,
+    found_user_id: req.body.found_user_id,
+    claimed_user_id: req.body.claimed_user_id,
+    date_found: req.body.date_found,
+    date_claimed: req.body.date_claimed,
+    location_found: req.body.location_found,
+    location_description: req.body.location_description,
+    location_room: req.body.location_room,
+    category: req.body.category
+  }
+
+  //var new_item = new Item(req.body);
+  console.log( new_item );
   //if estimated value of item is blank, insert null
   if (new_item.approx_value === "") {
     new_item.approx_value = null;

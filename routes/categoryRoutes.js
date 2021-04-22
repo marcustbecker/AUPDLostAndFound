@@ -8,7 +8,6 @@ app.route('/categories')
     .post(categoryCtrl.create_a_category);
 
 app.route('/category/:catId')
-    .get(categoryCtrl.find_a_category)
     .delete(categoryCtrl.delete_a_category);
 
 module.exports = app;
