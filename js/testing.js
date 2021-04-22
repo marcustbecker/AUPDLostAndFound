@@ -1,27 +1,27 @@
-// describe("Class Scheduler", function () {
-//   context("Tests Valid", function () {
-//     it("Should be true is classList is less than or equal to classSize", function () {
-//       //should allow add students to be added when spaces are available for classSize
-//       let classList = [
-//         "Susan",
-//         "Sam",
-//         "Sally",
-//         "jack",
-//         "john",
-//         "marcus",
-//         "dan",
-//         "lash",
-//         "nate",
-//       ];
-//       let maxClassSize = 15;
-//       let reservedSlots = 2;
-//       let classSize = maxClassSize - reservedSlots;
+describe("Items", function () {
+  context("Tests Valid", function () {
+    it("Should be true is classList is less than or equal to classSize", function () {
+      //should allow add students to be added when spaces are available for classSize
+      let classList = [
+        "Susan",
+        "Sam",
+        "Sally",
+        "jack",
+        "john",
+        "marcus",
+        "dan",
+        "lash",
+        "nate",
+      ];
+      let maxClassSize = 15;
+      let reservedSlots = 2;
+      let classSize = maxClassSize - reservedSlots;
 
-//       chai.assert.isTrue(
-//         canAddAStudent(classList, maxClassSize, reservedSlots)
-//       );
-//     });
-//   });
+      chai.assert.isTrue(
+        canAddAStudent(classList, maxClassSize, reservedSlots)
+      );
+    });
+  });
 
 //   context("Tests Not Valid", function () {
 //     it("Should be false if classList is larger than classSize", function () {

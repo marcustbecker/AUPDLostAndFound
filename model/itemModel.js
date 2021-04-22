@@ -1,5 +1,5 @@
 "use strict";
-var sql = require("./db2");
+var sql = require("./db");
 
 //Category object constructor
 var Item = function (item) {
@@ -24,13 +24,11 @@ Item.getAllItems = function (result) {
     " JOIN `location` ON `item`.`location_found` = `location`.`location_id`" +
     " JOIN user on found_user_id = user.user_id";
 
-  //const sqStr2 = "SELECT * FROM `item` JOIN `location` ON `item`.`location_found` = `location`.`location_id`"
   sql.query(sqStr, function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(null, err);
     } else {
-      console.log("item : ", res);
       result(null, res);
     }
   });
@@ -61,10 +59,8 @@ Item.getUnclaimedItems = function (result) {
   sql.query(sqStr, function (err, res) {
     if (err) {
       console.log("error: ", err);
-      console.log("item : ", res);
       result(err, null);
     } else {
-      console.log("item : ", res);
       result(null, res);
     }
   });
@@ -80,10 +76,8 @@ Item.getItemById = function (id, result) {
   sql.query(sqStr, [id], function (err, res) {
     if (err) {
       console.log("error: ", err);
-      console.log("item : ", res);
       result(err, null);
     } else {
-      console.log("Inside GetItemByID : ", res);
       result(null, res);
     }
   });
@@ -95,10 +89,8 @@ Item.claimItem = function (idItem, idUser, result) {
   sql.query(sqStr, [idUser, idItem], function (err, res) {
     if (err) {
       console.log("error: ", err);
-      console.log("item : ", res);
       result(err, null);
     } else {
-      console.log("Inside GetItemByID : ", res);
       result(null, res);
     }
   });

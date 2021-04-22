@@ -1,102 +1,90 @@
-'use strict';
-var sql = require('./db2');
+"use strict";
+var sql = require("./db");
 
 //Category object constructor
 var Category = function (category) {
-    this.category_name = category.category_name;
+  this.category_name = category.category_name;
 };
 
 Category.createCategory = function (newCat, result) {
-    sql.query("INSERT INTO category set ?", newCat, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        } else {
-            //console.log("res in taskModel.js: ", res);
-            //console.log("taskModel.js res.insertID: ", res.insertId); insertID is the id of the new object created
-            result(null, res.insertId);
-        }
-    });
+  sql.query("INSERT INTO category set ?", newCat, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      result(null, res.insertId);
+    }
+  });
 };
 
 Category.getCategoryById = function (categoryId, result) {
-    sql.query("SELECT category_id, category_name from category WHERE category_id = ? ", categoryId, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        } else {
-            result(null, res);
-        }
-    });
+  sql.query(
+    "SELECT category_id, category_name from category WHERE category_id = ? ",
+    categoryId,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    }
+  );
 };
 
-//maybe this will work
-function myFunction(id) {
-    let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
-        //console.log(sql);
+Category.getOneCategory = function (id, callback) {
+  let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
 
-        sql.query(sqlStr, id, function(err, result) {
-            if(err) throw err
-            //console.log(result);
+  sql.query(sqlStr, id, function (err, result) {
+    if (err) throw err;
 
-            if(result.length) {
-                return result[0];
-            }else {
-                return(null);
-            }
-        });
-}
-
-Category.getOneCategory = function(id, callback){
-    let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
-        //console.log(sql);
-
-        sql.query(sqlStr, id, function(err, result) {
-            if(err) throw err
-            //console.log(result);
-
-            if(result.length) {
-                callback(result[0]);
-            }else {
-                callback(null);
-            }
-        });
-
+    if (result.length) {
+      callback(result[0]);
+    } else {
+      callback(null);
+    }
+  });
 };
 
 Category.getAllCategories = function (result) {
-    sql.query("Select * from category", function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        } else {
-            //console.log('tasks : ', res);
-            result(null, res);
-        }
-    });
+  sql.query("Select * from category", function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
 };
+
 Category.updateById = function (id, task, result) {
-    sql.query("UPDATE tasks SET task = ? WHERE id = ?", [task.task, id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        } else {
-            result(null, res);
-        }
-    });
+  sql.query(
+    "UPDATE tasks SET task = ? WHERE id = ?",
+    [task.task, id],
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
 };
 
 Category.remove = function (id, result) {
-    sql.query("DELETE FROM category WHERE category_id = ?", [id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        } else {
-            result(null, res);
-        }
-    });
+  sql.query(
+    "DELETE FROM category WHERE category_id = ?",
+    [id],
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+      } else {
+        result(null, res);
+      }
+    }
+  );
 };
 
 module.exports = Category;
-
-
