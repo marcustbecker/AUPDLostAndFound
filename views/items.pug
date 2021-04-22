@@ -16,10 +16,11 @@ block content
         table(class='table table-striped' id="table" data-filter-control="true" data-show-search-clear-button="true")
             thead
                 th(data-field="item name" data-filter-control="input") Item Name
-                th(data-field="description") Description
+                if(Admin === 1)
+                    th(data-field="description") Description
                 th(data-field="value") Value
                 if(Admin === 1)
-                    th(data-field="found by") Officer ID
+                    th(data-field="found by") Found by
                 th(data-field="date found") Date Found 
                 if(Admin === 1)
                     th(data-field="claimed by") Claimed By
@@ -30,19 +31,20 @@ block content
                     th(data-field="delete") Delete
                     th(data-field='edit') Edit
                 else 
-                    th(data-field="view") View Details
+                    th(data-field="view" data-sortable="true") View Details
             
             tbody
                 each d in Data
                     tr
                         td=d.item_name
-                        td=d.item_description
+                        if(Admin === 1)
+                            td=d.item_description
                         td=d.approx_value
                         if(Admin === 1)
                             td=d.found_user_id
                         td=d.date_found
                         if(Admin === 1)
-                            td=d.claimed_user_id 
+                            td #{d.first_name}  #{d.last_name}
                             td=d.date_claimed
                         td=d.location_name
                         td=d.category_name
@@ -57,9 +59,11 @@ block content
                                     input(type="hidden" name='_method' value='EDIT')
                         else 
                             td
-                                form(method='post' action=`/category/${d.item_id}`)
-                                    input(class="btn btn-primary" type="submit" name='delete' value=`View Details` onClick="return confirm('Are you sure you want to delete')")
-                                    input(type="hidden" name='_method' value='EDIT')
+                                if (d.date_claimed == null) 
+                                    form(method='get' action=`/items/${d.item_id}`)
+                                        input(class="btn btn-primary" type="submit" value=`View Details`)
+                                else 
+                                    p Item claimed
 
             
 
