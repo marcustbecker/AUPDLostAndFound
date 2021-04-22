@@ -6,6 +6,7 @@ const pageRouter = require('./routes/mainRoutes');
 const CategoryRouter = require('./routes/categoryRoutes');
 const LocationRouter = require('./routes/locationRoutes')
 const ItemRouter = require('./routes/itemRoutes')
+const UserRouter = require('./routes/loginRegRoutes')
 
 var methodOverride = require('method-override')
 const app = express();
@@ -44,12 +45,12 @@ app.use(session({
 
 
 // Routers
-app.use('/', pageRouter, CategoryRouter, LocationRouter, ItemRouter);
+app.use('/', pageRouter, CategoryRouter, LocationRouter, ItemRouter, UserRouter);
 
 
 // Errors => page not found 404
 app.use((req, res, next) =>  {
-    var err = new Error('Page not found');
+    var err = new Error('404: Page not found');
     err.status = 404;
     next(err);
 })

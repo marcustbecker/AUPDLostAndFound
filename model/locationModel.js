@@ -5,8 +5,6 @@ var sql = require('./db2');
 var Location = function (location) {
     this.location_name = location.location_name;
     this.floor = location.floor;
-    this.room = location.room;
-    this.description = location.description;
 };
 
 Location.createLocation = function (newLocation, result) {
@@ -36,7 +34,7 @@ Category.getTaskById = function (taskId, result) {
 
 
 Location.getAllLocations = function (result) {
-    sql.query("Select * from location", function (err, res) {
+    sql.query("Select * from location ORDER BY location_name ASC, floor", function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(null, err);

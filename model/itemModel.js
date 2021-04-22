@@ -100,6 +100,9 @@ Item.claimItem = function(id, result) {
 /*
 Category.createCategory = function (newCat, result) {
     sql.query("INSERT INTO category set ?", newCat, function (err, res) {
+
+Item.createItem = function (newCat, result) {
+    sql.query("INSERT INTO item set ?", newCat, function (err, res) {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -111,6 +114,7 @@ Category.createCategory = function (newCat, result) {
     });
 };
 
+/*
 Category.remove = function (id, result) {
     sql.query("DELETE FROM category WHERE category_id = ?", [id], function (err, res) {
         if (err) {

@@ -2,10 +2,12 @@
 const Task = require('../model/taskModel.js');
 
 exports.getHomePage = function (req, res) {
+    let user = req.session.user;
     res.render('home', {title:"My application"});
 };
 
 exports.getTasks = function (req, res) {
+    let loggedIn = req.session.loggedIn;
     Task.getAllTask(function (err, task) {
         //console.log('controller')
         if (err) res.send(err);
@@ -16,6 +18,7 @@ exports.getTasks = function (req, res) {
 };
 
 exports.delete_a_task = function (req, res) {
+    let loggedIn = req.session.loggedIn;
     console.log(req.params.taskId)
     const id = req.params.taskId
     //res.render('test', {title:"Test application", Tasks: task});
@@ -28,10 +31,12 @@ exports.delete_a_task = function (req, res) {
 };
 
 exports.createForm = function (req, res){
+    let loggedIn = req.session.loggedIn;
     res.render('createTask')
 };
 
 exports.create_a_task = function (req, res) {
+    let loggedIn = req.session.loggedIn;
     console.log("POST CREATE req.body: ", req.body);
     var new_task = new Task(req.body);
     console.log( new_task );

@@ -6,6 +6,25 @@
     user-select: none;
 }
 
+.login-panel, .register-panel
+{
+    padding: 20px 20px 50px 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+.login-panel
+{
+    float: left;
+}
+.register-panel
+{
+    float: right;
+}
+
+.bg{
+    background-color: blue;
+}
+
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
