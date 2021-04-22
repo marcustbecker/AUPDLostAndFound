@@ -1,27 +1,15 @@
-describe("Items", function () {
-  context("Tests Valid", function () {
-    it("Should be true is classList is less than or equal to classSize", function () {
-      //should allow add students to be added when spaces are available for classSize
-      let classList = [
-        "Susan",
-        "Sam",
-        "Sally",
-        "jack",
-        "john",
-        "marcus",
-        "dan",
-        "lash",
-        "nate",
-      ];
-      let maxClassSize = 15;
-      let reservedSlots = 2;
-      let classSize = maxClassSize - reservedSlots;
-
-      chai.assert.isTrue(
-        canAddAStudent(classList, maxClassSize, reservedSlots)
-      );
-    });
+describe("GET /items", () => {
+  it("should return a list of items when called", (done) => {
+    chai
+      .request(app)
+      .get("/")
+      .end((err, res) => {
+        res.should.have.status(200);
+        //expect(res.body).to.deep.equal("{}");
+        done();
+      });
   });
+});
 
 //   context("Tests Not Valid", function () {
 //     it("Should be false if classList is larger than classSize", function () {
