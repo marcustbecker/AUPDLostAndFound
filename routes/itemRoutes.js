@@ -16,6 +16,14 @@ app.route('/claimeditems')
 app.route('/unclaimeditems')
     .get(itemCtrl.list_all_unclaimed_items)
 
+
+app.route('/lostItemsUser')
+    .get(itemCtrl.list_all_unclaimed_items)
+
+app.route('/lostItemsUser/:itemId')
+    .get(itemCtrl.list_item_description)
+    .post(itemCtrl.claim_item)
+
 app.route('/claimeditems')
     .get(itemCtrl.list_all_claimed_items)
 

@@ -1,0 +1,31 @@
+extends layout
+block content
+
+        main(class="container")
+            div(class="bg-light p-5 rounded")
+                h1 Lost Items
+
+                table.table.table-striped
+                    thead
+                        th Item Name
+                        th Value
+                        th Location 
+                        th Category
+                        th
+                    tbody
+                        each d in Data
+                            tr
+                                td #{d.item_name}
+                                td #{d.approx_value}
+                                if(d.floor)
+                                    td #{d.location_name} Floor: #{d.floor}
+                                else
+                                    td #{d.location_name} Floor: N/A
+                                td  #{d.category_name}
+                                td
+                                    form(method='get' action=`/lostItemsUser/${d.item_id}`)
+                                        input(class="btn btn-primary" type="submit" value="Details")
+
+            
+
+

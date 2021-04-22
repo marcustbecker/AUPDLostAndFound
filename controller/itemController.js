@@ -36,6 +36,35 @@ exports.list_all_claimed_items = function (req, res) {
 };
 
 exports.list_all_unclaimed_items = function (req, res) {
+    Item.getUnclaimedItems(function (err, items) {
+        if (err) res.send(err);
+        //res.json(items);
+        res.render('itemsUser', {title:"ItemsUser", Data: items});
+    });
+};
+
+exports.list_item_description = function (req, res) {
+    Item.getItemById(req.params.itemId, function(err, items) {
+        if (err) res.send(err);
+        //res.json(items);
+        res.render('itemsDescription', {title:"ItemDetails", Data: items});
+    });
+}
+
+exports.claim_item = function (req, res) {
+    Item.claimItem(req.params.itemId, function (err, item) {
+        if (err) res.send(err);
+        //res.json({message: 'Task successfully deleted'});
+        
+        res.render('test', {title:"Test application"});
+    });
+}
+
+/*
+exports.create_a_task = function (req, res) {
+    console.log("POST CREATE");
+    var new_task = new Task(req.body);
+    console.log( new_task );
     let user = req.session.user;
     Item.getUnclaimedItems(function (err, items) {
         if (err) res.send(err);
