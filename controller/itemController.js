@@ -24,11 +24,29 @@ exports.list_all_claimed_items = function (req, res) {
 };
 
 exports.list_all_unclaimed_items = function (req, res) {
-    Item.getUnclaimedItems(function (err, task) {
+    Item.getUnclaimedItems(function (err, items) {
         if (err) res.send(err);
-        res.json(task);
+        //res.json(items);
+        res.render('itemsUser', {title:"ItemsUser", Data: items});
     });
 };
+
+exports.list_item_description = function (req, res) {
+    Item.getItemById(req.params.itemId, function(err, items) {
+        if (err) res.send(err);
+        //res.json(items);
+        res.render('itemsDescription', {title:"ItemDetails", Data: items});
+    });
+}
+
+exports.claim_item = function (req, res) {
+    Item.claimItem(req.params.itemId, function (err, item) {
+        if (err) res.send(err);
+        //res.json({message: 'Task successfully deleted'});
+        
+        res.render('test', {title:"Test application"});
+    });
+}
 
 /*
 exports.create_a_task = function (req, res) {
