@@ -15,6 +15,7 @@ app
   .route("/createItem")
   .get(itemCtrl.create_an_item_form)
   .post(itemCtrl.create_an_item);
+//.post(itemCtrl.update_an_item);
 
 app.route("/claimeditems").get(itemCtrl.list_all_claimed_items);
 
@@ -26,5 +27,10 @@ app
   .route("/lostItemsUser/:itemId")
   .get(itemCtrl.list_item_description)
   .post(itemCtrl.claim_item);
+
+app.route("/editItem/:itemID");
+//.get(edit_item_form)
+
+app.route("/claimeditems").get(itemCtrl.list_all_claimed_items);
 
 module.exports = app;

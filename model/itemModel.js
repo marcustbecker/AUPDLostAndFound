@@ -5,7 +5,7 @@ var sql = require("./db");
 var Item = function (item) {
   this.item_name = item.item_name;
   this.item_id = item.item_id;
-  this.user_id = item.user_id;
+  //this.user_id = item.user_id;
   this.user_name = item.user_name;
   this.item_description = item.item_description;
   this.approx_value = item.approx_value;
@@ -13,6 +13,7 @@ var Item = function (item) {
   this.claimed_user_id = item.claimed_user_id;
   this.date_found = item.date_found;
   this.date_claimed = item.date_claimed;
+  this.location_room = item.location_room;
   this.location_found = item.location_found;
   this.category = item.category;
 };
@@ -72,7 +73,6 @@ Item.getItemById = function (id, result) {
     " INNER JOIN category ON item.category = category.category_id" +
     " INNER JOIN location ON item.location_found = location.location_id" +
     " WHERE item.item_id = ?";
-  console.log("inside getItemById");
   sql.query(sqStr, [id], function (err, res) {
     if (err) {
       console.log("error: ", err);
@@ -97,7 +97,22 @@ Item.claimItem = function (idItem, idUser, result) {
 };
 
 Item.createItem = function (newItem, result) {
-  sql.query("INSERT INTO item set ?", newItem, function (err, res) {
+  const item = {
+    item_name: newItem.item_name,
+    item_description: newItem.item_description,
+    approx_value: newItem.approx_value,
+    found_user_id: newItem.found_user_id,
+    claimed_user_id: newItem.claimed_user_id,
+    date_found: newItem.date_found,
+    date_claimed: newItem.date_claimed,
+    location_found: newItem.location_found,
+    location_description: newItem.location_description,
+    location_room: newItem.location_room,
+    category: newItem.category
+  }
+  console.log("INSIDE createItem model");
+  console.log("newItem");
+  sql.query("INSERT INTO item set ?", item, function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(err, null);

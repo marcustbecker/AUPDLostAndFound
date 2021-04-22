@@ -75,10 +75,10 @@ exports.claim_item = function (req, res) {
   Item.claimItem(req.params.itemId, user, function (err, item) {
     if (err) res.send(err);
     if (user == null) {
-      res.render("home", { session: "Session Expired!" });
+      res.render("claimedItem", { session: "Session Expired!" });
     } else {
       res.render("claimedItem", {
-        title: "Test application",
+        title: "Item Claim",
         LoggedIn: req.session.user.loggedIn,
         Admin: req.session.user.admin,
       });
@@ -107,7 +107,20 @@ exports.create_an_item_form = function (req, res) {
 };
 
 exports.create_an_item = function (req, res) {
-  var new_item = new Item(req.body);
+  var new_item = {
+    item_name: req.body.item_name,
+    item_description: req.body.item_description,
+    approx_value: req.body.approx_value,
+    found_user_id: req.body.found_user_id,
+    claimed_user_id: req.body.claimed_user_id,
+    date_found: req.body.date_found,
+    date_claimed: req.body.date_claimed,
+    location_found: req.body.location_found,
+    location_description: req.body.location_description,
+    location_room: req.body.location_room,
+    category: req.body.category,
+  };
+
   if (new_item.approx_value === "") {
     new_item.approx_value = null;
   }
@@ -124,7 +137,6 @@ exports.create_an_item = function (req, res) {
 };
 
 exports.update_an_item = function (req, res) {
-  var updated_item = new Item(req.body);
   var updatedItem = req.params;
   Item.updateById(updatedItem, function (err, item) {
     if (err) res.send(err);
