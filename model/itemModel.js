@@ -5,6 +5,8 @@ var sql = require("./db2");
 var Item = function (item) {
   this.item_name = item.item_name;
   this.item_id = item.item_id;
+  this.user_id = item.user_id;
+  this.user_name = item.user_name;
   this.item_description = item.item_description;
   this.approx_value = item.approx_value;
   this.found_user_id = item.found_user_id;
@@ -19,7 +21,8 @@ Item.getAllItems = function (result) {
   const sqStr =
     "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found, DATE_FORMAT(date_claimed, '%m/%d/%Y') AS date_claimed FROM item" +
     " INNER JOIN category ON item.category = category.category_id" +
-    " JOIN `location` ON `item`.`location_found` = `location`.`location_id`";
+    " JOIN `location` ON `item`.`location_found` = `location`.`location_id`" +
+    " JOIN user on found_user_id = user.user_id";
 
   //const sqStr2 = "SELECT * FROM `item` JOIN `location` ON `item`.`location_found` = `location`.`location_id`"
   sql.query(sqStr, function (err, res) {
@@ -86,10 +89,10 @@ Item.getItemById = function (id, result) {
   });
 };
 
-Item.claimItem = function (id, result) {
+Item.claimItem = function (idItem, idUser, result) {
   const sqStr =
-    "UPDATE item SET date_claimed = CURRENT_TIMESTAMP WHERE item_id = ?";
-  sql.query(sqStr, [id], function (err, res) {
+    "UPDATE item SET date_claimed = CURRENT_TIMESTAMP, claimed_user_id = ? WHERE item_id = ?";
+  sql.query(sqStr, [idUser, idItem], function (err, res) {
     if (err) {
       console.log("error: ", err);
       console.log("item : ", res);

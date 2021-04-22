@@ -20,5 +20,8 @@ block content
                                     a  in room #{d.location_room}
                         h4 Location description: 
                             p(class="lead" style="margin-top: 10px") #{d.location_description}
-                            form(method='post' action=`/lostItemsUser/${d.item_id}` style="text-align: center")
-                                input(class="btn btn-primary" type="submit" value="Claim")
+                                form(method='get' action="/items" style="float: left")
+                                    input(class="btn btn-primary" type="submit" value="Back" )
+                                    
+                                form(method='post' action=`/items/${d.item_id}` style="float: left")
+                                    input(class="btn btn-primary" type="submit" value="Claim" style="margin-left: 20px;")
