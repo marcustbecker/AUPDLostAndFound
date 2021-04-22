@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 // Page routes
-const pageRouter = require('./routes/mainRoutes');
 const CategoryRouter = require('./routes/categoryRoutes');
 const LocationRouter = require('./routes/locationRoutes')
 const ItemRouter = require('./routes/itemRoutes')
@@ -39,13 +38,13 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60 * 1000 * 30
+        maxAge: 60 * 1000 * 30 * 60
     }
 }));
 
 
 // Routers
-app.use('/', pageRouter, CategoryRouter, LocationRouter, ItemRouter, UserRouter);
+app.use('/', CategoryRouter, LocationRouter, ItemRouter, UserRouter);
 
 
 // Errors => page not found 404

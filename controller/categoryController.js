@@ -1,5 +1,4 @@
 "use strict";
-const Task = require("../model/taskModel.js");
 const Category = require("../model/categoryModel");
 
 exports.getHomePage = function (req, res) {
@@ -50,7 +49,6 @@ exports.delete_a_category = function (req, res) {
   const id = req.params.catId;
   Category.remove(id, function (err, category) {
     if (err) res.send(err);
-    //res.json({message: 'Task successfully deleted'});
     const deleting = "Category";
     res.render("deleted", {
       title: "Category Delete",
@@ -70,10 +68,4 @@ exports.find_a_category = function (req, res) {
     //res.redirect('/categories')
   });
 };
-// exports.update_a_task = function (req, res) {
-//     let user = req.session.user;
-//     Task.updateById(req.params.taskId, new Task(req.body), function (err, task) {
-//         if (err) res.send(err);
-//         res.json(task);
-//     });
-// };
+

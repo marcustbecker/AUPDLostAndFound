@@ -63,7 +63,7 @@ exports.claim_item = function (req, res) {
   let user = req.session.user.user_id;
   Item.claimItem(req.params.itemId, user, function (err, item) {
     if (err) res.send(err);
-    //res.json({message: 'Task successfully deleted'});
+
 
     res.render("claimedItem", {
       title: "Test application",
@@ -73,21 +73,6 @@ exports.claim_item = function (req, res) {
   });
 };
 
-exports.create_a_task = function (req, res) {
-  console.log("POST CREATE");
-  var new_task = new Task(req.body);
-  console.log(new_task);
-  Item.getUnclaimedItems(function (err, items) {
-    if (err) res.send(err);
-    //res.json(items);
-    res.render("reportsUnclaimed", {
-      title: "Unclaimed Items Report",
-      Data: items,
-      LoggedIn: req.session.user.loggedIn,
-      Admin: req.session.user.admin,
-    });
-  });
-};
 
 exports.create_an_item_form = function (req, res) {
   let user = req.session.user;
@@ -127,6 +112,7 @@ exports.create_an_item = function (req, res) {
     });
   }
 };
+
 exports.update_an_item = function (req, res) {
   var updated_item = new Item(req.body);
   var updatedItem = req.params;

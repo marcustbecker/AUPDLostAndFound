@@ -10,10 +10,7 @@ app
   .get(itemCtrl.create_an_item_form)
   .post(itemCtrl.create_an_item);
 
-app
-  .route("/items/:itemId")
-  .delete(itemCtrl.delete_an_item)
-  .post(itemCtrl.update_an_item);
+  //.post(itemCtrl.update_an_item);
 
 app.route("/claimeditems").get(itemCtrl.list_all_claimed_items);
 
@@ -29,7 +26,8 @@ app
 app
   .route("/items/:itemId")
   .get(itemCtrl.list_item_description)
-  .post(itemCtrl.claim_item);
+  .post(itemCtrl.claim_item)
+  .delete(itemCtrl.delete_an_item);
 
 app.route("/claimeditems").get(itemCtrl.list_all_claimed_items);
 

@@ -5,8 +5,8 @@ var sql = require("./db2");
 var Item = function (item) {
   this.item_name = item.item_name;
   this.item_id = item.item_id;
-  this.user_id = item.user_id;
-  this.user_name = item.user_name;
+  //this.user_id = item.user_id;
+  //this.user_name = item.user_name;
   this.item_description = item.item_description;
   this.approx_value = item.approx_value;
   this.found_user_id = item.found_user_id;
@@ -105,11 +105,26 @@ Item.claimItem = function (idItem, idUser, result) {
 };
 
 Item.createItem = function (newItem, result) {
-  sql.query("INSERT INTO item set ?", newItem, function (err, res) {
+  const item = {
+    item_name: newItem.item_name,
+    item_description: newItem.item_description,
+    approx_value: newItem.approx_value,
+    found_user_id: newItem.found_user_id,
+    claimed_user_id: newItem.claimed_user_id,
+    date_found: newItem.date_found,
+    date_claimed: newItem.date_claimed,
+    location_found: newItem.location_found,
+    location_description: newItem.location_description,
+    location_room: newItem.location_room,
+    category: newItem.category
+  }
+  
+  sql.query("INSERT INTO item set ?", item, function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(err, null);
     } else {
+      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
