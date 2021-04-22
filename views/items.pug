@@ -48,12 +48,12 @@ block content
                         td=d.category_name
                         if(Admin === 1)
                             td
-                                form(method='post' action=`/category/${d.item_id}`)
+                                form(method='post' action=`/items/${d.item_id}`)
                                     input(class="btn btn-primary" type="submit" name='delete' value=`Delete` onClick="return confirm('Are you sure you want to delete')")
                                     input(type="hidden" name='_method' value='DELETE')
                             td
-                                form(method='post' action=`/category/${d.item_id}`)
-                                    input(class="btn btn-primary" type="submit" name='delete' value=`Edit` onClick="return confirm('Are you sure you want to delete')")
+                                form(method='post' action=`/items/${d.item_id}`)
+                                    input(class="btn btn-primary" type="submit" name='edit' value=`Edit`)
                                     input(type="hidden" name='_method' value='EDIT')
                         else 
                             td
