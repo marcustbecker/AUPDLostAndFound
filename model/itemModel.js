@@ -1,5 +1,5 @@
-'use strict';
-var sql = require('./db2');
+"use strict";
+var sql = require("./db2");
 
 //Category object constructor
 var Item = function (item) {
@@ -36,55 +36,58 @@ Item.getAllItems = function (result) {
 };
 
 Item.getClaimedItems = function (result) {
-    const sqStr = "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found, DATE_FORMAT(date_claimed, '%m/%d/%Y') AS date_claimed FROM item"
-        + " INNER JOIN user ON item.found_user_id = user.user_id WHERE claimed_user_id IS NOT NULL"
+  const sqStr =
+    "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found, DATE_FORMAT(date_claimed, '%m/%d/%Y') AS date_claimed FROM item" +
+    " INNER JOIN user ON item.found_user_id = user.user_id WHERE claimed_user_id IS NOT NULL";
 
-    sql.query( sqStr, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        } else {
-            result(null, res);
-        }
-    });
+  sql.query(sqStr, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      result(null, res);
+    }
+  });
 };
 
 Item.getUnclaimedItems = function (result) {
+  const sqStr =
+    "SELECT * FROM item" +
+    " INNER JOIN category ON item.category = category.category_id" +
+    " JOIN location ON item.location_found = location.location_id" +
+    " WHERE date_claimed IS NULL";
 
-    const sqStr = "SELECT * FROM item"
-    + " INNER JOIN category ON item.category = category.category_id"
-    + " JOIN location ON item.location_found = location.location_id"
-    + " WHERE date_claimed IS NULL"
-
-    sql.query(sqStr, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            console.log('item : ', res);
-            result(err, null);
-        } else {
-            console.log('item : ', res);
-            result(null, res);
-        }
-    });
+  sql.query(sqStr, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      console.log("item : ", res);
+      result(err, null);
+    } else {
+      console.log("item : ", res);
+      result(null, res);
+    }
+  });
 };
 
 Item.getItemById = function (id, result) {
-    const sqStr = "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found FROM item"
-    + " INNER JOIN category ON item.category = category.category_id"
-    + " INNER JOIN location ON item.location_found = location.location_id"
-    + " WHERE item.item_id = ?"
-    console.log("inside getItemById");
-    sql.query(sqStr, [id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            console.log('item : ', res);
-            result(err, null);
-        } else {
-            console.log('Inside GetItemByID : ', res);
-            result(null, res);
-        }
-    });
-}
+  const sqStr =
+    "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found FROM item" +
+    " INNER JOIN category ON item.category = category.category_id" +
+    " INNER JOIN location ON item.location_found = location.location_id" +
+    " WHERE item.item_id = ?";
+  console.log("inside getItemById");
+  sql.query(sqStr, [id], function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      console.log("item : ", res);
+      result(err, null);
+    } else {
+      console.log("Inside GetItemByID : ", res);
+      result(null, res);
+    }
+  });
+};
+
 
 Item.claimItem = function(idItem, idUser, result) {
 
@@ -105,43 +108,53 @@ Item.claimItem = function(idItem, idUser, result) {
 Category.createCategory = function (newCat, result) {
     sql.query("INSERT INTO category set ?", newCat, function (err, res) {
 
-Item.createItem = function (newCat, result) {
-    sql.query("INSERT INTO item set ?", newCat, function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        } else {
-            //console.log("res in taskModel.js: ", res);
-            //console.log("taskModel.js res.insertID: ", res.insertId); insertID is the id of the new object created
-            result(null, res.insertId);
-        }
-    });
+Item.claimItem = function (id, result) {
+  const sqStr =
+    "UPDATE item SET date_claimed = CURRENT_TIMESTAMP WHERE item_id = ?";
+  sql.query(sqStr, [id], function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      console.log("item : ", res);
+      result(err, null);
+    } else {
+      console.log("Inside GetItemByID : ", res);
+      result(null, res);
+    }
+  });
 };
 
-/*
-Category.remove = function (id, result) {
-    sql.query("DELETE FROM category WHERE category_id = ?", [id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        } else {
-            result(null, res);
-        }
-    });
+
+Item.createItem = function (newItem, result) {
+  sql.query("INSERT INTO item set ?", newItem, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      result(null, res.insertId);
+    }
+  });
 };
 
-Category.updateById = function (id, task, result) {
-    sql.query("UPDATE tasks SET task = ? WHERE id = ?", [task.task, id], function (err, res) {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-        } else {
-            result(null, res);
-        }
-    });
+Item.updateById = function (item, result) {
+  sql.query("UPDATE item SET ?", item, function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
 };
-*/
+
+Item.remove = function (id, result) {
+  sql.query("DELETE FROM item WHERE item_id = ?", [id], function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+    } else {
+      result(null, res);
+    }
+  });
+};
 
 module.exports = Item;
-
-

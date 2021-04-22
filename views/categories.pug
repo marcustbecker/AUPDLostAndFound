@@ -30,5 +30,5 @@ block content
                             td=c.category_name
                             td
                                 form(method='post' action=`/category/${c.category_id}`)
-                                    input(class="btn btn-primary" type="submit" name='delete' value=`Delete ${c.category_id}` onClick="return confirm('Are you sure you want to delete')")
+                                    input(class="btn btn-primary" type="submit" name='delete' value=`Delete` onClick="return confirm('Are you sure you want to delete')")
                                     input(type="hidden" name='_method' value='DELETE')
