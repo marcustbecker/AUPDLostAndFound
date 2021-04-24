@@ -15,6 +15,7 @@ app.use(cors());
 // for body parser. to collect data that sent from the client.
 app.use(express.urlencoded({ extended: false }));
 
+// Allows PUT and DELETE requests to be sent through forms
 app.use(
   methodOverride(function (req, res) {
     if (req.body && typeof req.body === "object" && "_method" in req.body) {
@@ -45,7 +46,7 @@ app.use(
   })
 );
 
-// Routers
+// Page Routers
 app.use("/", CategoryRouter, LocationRouter, ItemRouter, UserRouter);
 
 // Errors => page not found 404
