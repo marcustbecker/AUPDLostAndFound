@@ -1,4 +1,4 @@
-//GET, POST, DELETE functionality for locations table
+// GET, POST, DELETE functionality for locations table
 "use strict";
 var Location = require("../model/locationModel");
 
