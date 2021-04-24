@@ -31,6 +31,4 @@ app
 app.route("/editItem/:itemID");
 //.get(edit_item_form)
 
-app.route("/claimeditems").get(itemCtrl.list_all_claimed_items);
-
 module.exports = app;

@@ -7,6 +7,7 @@ exports.list_all_items = function (req, res) {
   let user = req.session.user;
   Item.getAllItems(function (err, items) {
     if (err) res.send(err);
+    res.send(items); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
@@ -24,6 +25,7 @@ exports.list_all_claimed_items = function (req, res) {
   let user = req.session.user;
   Item.getClaimedItems(function (err, items) {
     if (err) res.send(err);
+    res.send(items); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
@@ -41,6 +43,7 @@ exports.list_all_unclaimed_items = function (req, res) {
   let user = req.session.user;
   Item.getUnclaimedItems(function (err, items) {
     if (err) res.send(err);
+    res.send(items); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
@@ -55,8 +58,10 @@ exports.list_all_unclaimed_items = function (req, res) {
 };
 
 exports.list_item_description = function (req, res) {
+  let user = req.session.user;
   Item.getItemById(req.params.itemId, function (err, items) {
     if (err) res.send(err);
+    res.send(items); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
@@ -71,9 +76,12 @@ exports.list_item_description = function (req, res) {
 };
 
 exports.claim_item = function (req, res) {
-  let user = req.session.user.user_id;
+  //let user = req.session.user.user_id;
+  console.log("REQ:");
+  console.log(user);
   Item.claimItem(req.params.itemId, user, function (err, item) {
     if (err) res.send(err);
+    res.send("item claimed"); // <-------FOR TESTING
     if (user == null) {
       res.render("claimedItem", { session: "Session Expired!" });
     } else {
@@ -131,6 +139,7 @@ exports.create_an_item = function (req, res) {
   } else {
     Item.createItem(new_item, function (err, item) {
       if (err) res.send(err);
+      res.send(new_item); // <-------FOR TESTING
       res.redirect("/items");
     });
   }
@@ -150,6 +159,7 @@ exports.delete_an_item = function (req, res) {
   Item.remove(id, function (err, category) {
     if (err) res.send(err);
     const deleting = "Item";
+    res.send("deleted id:" + id); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
