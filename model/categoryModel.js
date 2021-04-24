@@ -35,31 +35,24 @@ Category.getCategoryById = function (categoryId, result) {
 Category.getOneCategory = function (id, callback) {
   let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
 
-        sql.query(sqlStr, id, function(err, result) {
-            if(err) throw err
-            //console.log(result);
+  sql.query(sqlStr, id, function (err, result) {
+    if (err) throw err;
+    //console.log(result);
 
-            if(result.length) {
-                return result[0];
-            }else {
-                return(null);
-            }
-        });
-}
+    if (result.length) {
+      return result[0];
+    } else {
+      return null;
+    }
+  });
+};
 
-Category.getOneCategory = function(id, callback){
-    let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
+Category.getOneCategory = function (id, callback) {
+  let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
 
-        sql.query(sqlStr, id, function(err, result) {
-            if(err) throw err
-            //console.log(result);
-
-            if(result.length) {
-                callback(result[0]);
-            }else {
-                callback(null);
-            }
-        });
+  sql.query(sqlStr, id, function (err, result) {
+    if (err) throw err;
+    //console.log(result);
 
     if (result.length) {
       callback(result[0]);
@@ -67,6 +60,12 @@ Category.getOneCategory = function(id, callback){
       callback(null);
     }
   });
+
+  if (result.length) {
+    callback(result[0]);
+  } else {
+    callback(null);
+  }
 };
 
 Category.getAllCategories = function (result) {

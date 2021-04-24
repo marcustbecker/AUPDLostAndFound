@@ -6,7 +6,7 @@ exports.getCategories = function (req, res) {
   //if (user.admin) {
   Category.getAllCategories(function (err, categories) {
     if (err) res.send(err);
-    res.send(categories); // <-------FOR TESTING
+    //res.send(categories); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
@@ -18,9 +18,6 @@ exports.getCategories = function (req, res) {
       });
     }
   });
-  // } else {
-  //   res.render("home", { title: "AUPD Lost and Found" });
-  // }
 };
 
 exports.create_a_category = function (req, res) {
@@ -30,8 +27,8 @@ exports.create_a_category = function (req, res) {
   } else {
     Category.createCategory(new_category, function (err, category) {
       if (err) res.send(err);
-      res.send(new_category); // <-------FOR TESTING
-      //res.redirect("/categories");
+      //res.send(new_category); // <-------FOR TESTING
+      res.redirect("/categories");
     });
   }
 };
@@ -42,7 +39,7 @@ exports.delete_a_category = function (req, res) {
   Category.remove(id, function (err, category) {
     if (err) res.send(err);
     const deleting = "Category";
-    res.send("deleted:" + category); // <-------FOR TESTING
+    //res.send("deleted:" + category); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {

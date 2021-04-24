@@ -5,7 +5,7 @@ exports.list_all_locations = function (req, res) {
   let user = req.session.user;
   Location.getAllLocations(function (err, locations) {
     if (err) res.send(err);
-    res.send(locations); // <-------FOR TESTING
+    //res.send(locations); // <-------FOR TESTING
     if (user == null) {
       res.render("home", { session: "Session Expired!" });
     } else {
@@ -32,8 +32,8 @@ exports.create_location = function (req, res) {
   } else {
     Location.createLocation(new_location, function (err, location) {
       if (err) res.send(err);
-      res.send(new_location); // <-------FOR TESTING
-      //res.redirect("/locations");
+      //res.send(new_location); // <-------FOR TESTING
+      res.redirect("/locations");
     });
   }
 };
@@ -43,7 +43,7 @@ exports.delete_a_location = function (req, res) {
   const id = req.params.locatId;
   Location.remove(id, function (err, location) {
     if (err) res.send(err);
-    res.send("deleted location id: " + id); // <-------FOR TESTING
+    //res.send("deleted location id: " + id); // <-------FOR TESTING
     if (user == null) {
       res.render("home");
     } else {
