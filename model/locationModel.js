@@ -21,18 +21,40 @@ Location.createLocation = function (newLocation, result) {
 };
 
 Location.getAllLocations = function (result) {
-  sql.query(
-    "Select * from location ORDER BY location_name ASC, floor",
-    function (err, res) {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-      } else {
-        //console.log('location : ', res);
-        result(null, res);
-      }
-    }
-  );
+    sql.query("Select * from location ORDER BY location_name ASC, floor", function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            //console.log('location : ', res);
+            result(null, res);
+        }
+    });
+};
+
+Location.getLocationById = function (id, result) {
+    const sqStr = "SELECT * FROM location WHERE location_id = ? "
+
+    sql.query(sqStr, id, function(err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            //console.log('location : ', res);
+            result(null, res);
+        }
+    });
+};
+/*
+Category.updateById = function (id, task, result) {
+    sql.query("UPDATE tasks SET task = ? WHERE id = ?", [task.task, id], function (err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            result(null, res);
+        }
+    });
 };
 
 Location.remove = function (id, result) {

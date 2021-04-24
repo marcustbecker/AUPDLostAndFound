@@ -28,7 +28,17 @@ app
   .get(itemCtrl.list_item_description)
   .post(itemCtrl.claim_item);
 
-app.route("/editItem/:itemID");
-//.get(edit_item_form)
+app
+  .route("/items/:itemId")
+  .get(itemCtrl.list_item_description)
+  .post(itemCtrl.claim_item)
+  .delete(itemCtrl.delete_an_item);
+
+app
+  .route("/editItem/:itemId")
+  .get(itemCtrl.edit_item_form)
+  .post(itemCtrl.update_by_id);
+
+app.route("/claimeditems").get(itemCtrl.list_all_claimed_items);
 
 module.exports = app;

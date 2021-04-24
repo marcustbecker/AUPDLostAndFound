@@ -68,6 +68,9 @@ Item.getUnclaimedItems = function (result) {
 };
 
 Item.getItemById = function (id, result) {
+  console.log("Inside getItemById");
+  console.log(id);
+  console.log(result);
   const sqStr =
     "SELECT *, DATE_FORMAT(date_found, '%m/%d/%Y') AS date_found FROM item" +
     " INNER JOIN category ON item.category = category.category_id" +
@@ -79,6 +82,7 @@ Item.getItemById = function (id, result) {
       result(err, null);
     } else {
       result(null, res);
+      console.log(res);
     }
   });
 };
@@ -110,6 +114,7 @@ Item.createItem = function (newItem, result) {
     location_room: newItem.location_room,
     category: newItem.category
   }
+
   console.log("INSIDE createItem model");
   console.log("newItem");
   sql.query("INSERT INTO item set ?", item, function (err, res) {
@@ -122,8 +127,22 @@ Item.createItem = function (newItem, result) {
   });
 };
 
-Item.updateById = function (item, result) {
-  sql.query("UPDATE item SET ?", item, function (err, res) {
+Item.updateById = function (newItem, id,  result) {
+  console.log("inside updateByID");
+  const sqStr = "UPDATE item SET item_name = ?, item_description = ?, approx_value = ?, location_found = ?, location_description = ?, location_room = ?, category = ?"  
+  + " WHERE item_id = ?"
+  const item = {
+    item_name: newItem.item_name,
+    item_description: newItem.item_description,
+    approx_value: newItem.approx_value,
+    location_found: newItem.location_found,
+    location_description: newItem.location_description,
+    location_room: newItem.location_room,
+    category: newItem.category
+  }
+
+  console.log(item);
+  sql.query(sqStr, [item.item_name, item.item_description, item.approx_value, item.location_found, item.location_description, item.location_room, item.category, id], function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(null, err);
