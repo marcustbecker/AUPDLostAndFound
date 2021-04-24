@@ -45,6 +45,19 @@ Location.getAllLocations = function (result) {
     });
 };
 
+Location.getLocationById = function (id, result) {
+    const sqStr = "SELECT * FROM location WHERE location_id = ? "
+
+    sql.query(sqStr, id, function(err, res) {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+        } else {
+            //console.log('location : ', res);
+            result(null, res);
+        }
+    });
+};
 /*
 Category.updateById = function (id, task, result) {
     sql.query("UPDATE tasks SET task = ? WHERE id = ?", [task.task, id], function (err, res) {

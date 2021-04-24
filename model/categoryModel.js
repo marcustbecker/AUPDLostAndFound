@@ -49,7 +49,6 @@ function myFunction(id) {
 
 Category.getOneCategory = function(id, callback){
     let sqlStr = `SELECT * FROM category WHERE category_id = ?`;
-        //console.log(sql);
 
         sql.query(sqlStr, id, function(err, result) {
             if(err) throw err

@@ -11,15 +11,13 @@ exports.list_all_items = function (req, res) {
     if (err) res.send(err);
 
     //console.log('res', items);
-    res.json(items);
-    /*
+    //console.log(items);
     res.render("items", {
       title: "Lost and Found Items",
       Data: items,
       LoggedIn: req.session.user.loggedIn,
       Admin: req.session.user.admin,
     });
-    */
   });
 };
 
@@ -129,14 +127,79 @@ exports.create_an_item = function (req, res) {
   }
 };
 
-exports.update_an_item = function (req, res) {
-  var updated_item = new Item(req.body);
-  var updatedItem = req.params;
-  Item.updateById(updatedItem, function (err, item) {
+exports.edit_item_form = function (req, res) {
+  let user = req.session.user;
+  let id = req.params.itemId;
+  console.log("id =" + id);
+  Item.getItemById( id , function (err, item) {
     if (err) res.send(err);
-    res.render("/itemEdit");
+    Category.getAllCategories(function (err, category) {
+      if (err) res.send(err);
+      Location.getAllLocations(function (err, locations) {
+        if (err) res.send(err);
+        console.log("INSIDE EDIT ITEM FORM")
+        console.log(item);
+        console.log(category);
+        //console.log(locations);
+        res.render("editItemForm", {
+        title: "Edit Item Page",
+        Item: item,
+        Category: category,
+        Location: locations,
+        LoggedIn: user.loggedIn,
+        Admin: user.admin,
+        UserID: user.user_id,
+        });       
+      });
+    });
   });
 };
+
+exports.update_by_id = function (req, res) {
+  let id = req.params.itemId;
+  console.log("Inside update_by_id");
+  Item.getItemById(id, function (err, item) {
+    if (err) res.send(err);
+    console.log(item);
+    console.log("----------------")
+    console.log(item.item_ide);
+    console.log(item.item_date_found);
+    console.log(item.item_name);
+    var new_item = {
+      item_id: id,
+      item_name: req.body.item_name,
+      item_description: req.body.item_description,
+      approx_value: req.body.approx_value,
+      claimed_user_id: item.claimed_user_id,
+      date_claimed: item.date_claimed,
+      location_found: req.body.location_found,
+      location_description: req.body.location_description,
+      location_room: req.body.location_room,
+      category: req.body.category
+    }
+    console.log( "-------NEW ITEM------" );
+    console.log(new_item);
+    //if estimated value of item is blank, insert null
+    if (new_item.approx_value === "") {
+      new_item.approx_value = null;
+    }
+    //handles null error
+    if (!new_item.item_name || !new_item.item_description) {
+      res
+        .status(400)
+        .send({ error: true, message: "Please provide name/description" });
+    } else {
+      Item.updateById(new_item, new_item.item_id, function (err, item) {
+        if (err) res.send(err);
+        //res.json(item);
+        res.redirect("/items");
+      });
+    };
+  });
+};
+
+
+
 
 exports.delete_an_item = function (req, res) {
   let user = req.session.user;
@@ -154,3 +217,4 @@ exports.delete_an_item = function (req, res) {
     });
   });
 };
+
